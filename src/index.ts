@@ -3,14 +3,14 @@ import {app } from './app';
 import connectDB from './config/db';
 
 
-
+const PORT = process.env.PORT || 3000
 const start = async() =>{
     try{
         console.log('hi da');
        await connectDB()
      console.log('connected to database')
        
-app.listen(3000,()=>{
+app.listen(PORT,()=>{
     console.log('server started')
 })
     }
