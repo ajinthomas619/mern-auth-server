@@ -30,7 +30,7 @@ app.use(cookieParser())
 const store = new MemoryStore()
 app.use(
     cors({
-      origin: "http://localhost:5173",
+      origin: "http://mern-auth-client-fawn.vercel.app",
       methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
       credentials: true,
     })
