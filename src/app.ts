@@ -31,7 +31,7 @@ const store = new MemoryStore()
 app.use(
     cors({
       origin: "https://mern-auth-client-fawn.vercel.app",
-      methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+      methods: "GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS",
       credentials: true,
     })
   );
