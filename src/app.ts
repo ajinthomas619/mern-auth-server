@@ -1,4 +1,4 @@
-import express, { NextFunction, Request, Response } from 'express';
+import express from 'express';
 import bodyParser from 'body-parser';
 import cors from 'cors';
 import { routes } from './routes';
@@ -25,20 +25,17 @@ declare module 'express-session'{
 }
 
 const app =express();
-app.use(express.json());
 app.use(express.urlencoded({extended:true}));
+app.use(express.json());
 app.use(cookieParser())
 const store = new MemoryStore()
-const allowedOrigins = ['mern-auth-client-fawn.vercel.app'];
-const allowCrossDomain = (req:Request, res:Response, next:NextFunction) => {
-  res.header(`Access-Control-Allow-Origin`,` https://mern-auth-client-fawn.vercel.app`);    
-  res.header("Access-Control-Allow-Credentials", "true");
-  //res.header("Access-Control-Expose-Headers", "true");
-  res.header(`Access-Control-Allow-Methods`,` GET,PUT,OPTIONS,POST,DELETE,HEAD`);
-  res.header("Access-Control-Allow-Headers", "Authorization, Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers");
-    next();
-  };
-app.use(allowCrossDomain)
+app.use(
+    cors({
+      origin: "https://mern-auth-client-fawn.vercel.app",
+      methods: "GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS",
+      credentials: true,
+    })
+  );
 app.use(
   session({
 
