@@ -1,4 +1,4 @@
-import express from 'express';
+import express, { NextFunction, Request, Response } from 'express';
 import bodyParser from 'body-parser';
 import cors from 'cors';
 import { routes } from './routes';
@@ -30,20 +30,15 @@ app.use(express.urlencoded({extended:true}));
 app.use(cookieParser())
 const store = new MemoryStore()
 const allowedOrigins = ['mern-auth-client-fawn.vercel.app'];
-app.use(cors({
-  origin: function (origin, callback) {
-    if (!origin) {
-      return callback(null, true);
-    }
-
-    if (allowedOrigins.includes(origin)) {
-      const msg = 'The CORS policy for this site does not allow access from the specified Origin.';
-      return callback(new Error(msg), false);
-    }
-    return callback(null, true);
-  }
-
-}))
+const allowCrossDomain = (req:Request, res:Response, next:NextFunction) => {
+  res.header(`Access-Control-Allow-Origin`,` https://mern-auth-client-fawn.vercel.app`);    
+  res.header("Access-Control-Allow-Credentials", "true");
+  //res.header("Access-Control-Expose-Headers", "true");
+  res.header(`Access-Control-Allow-Methods`,` GET,PUT,OPTIONS,POST,DELETE,HEAD`);
+  res.header("Access-Control-Allow-Headers", "Authorization, Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers");
+    next();
+  };
+app.use(allowCrossDomain)
 app.use(
   session({
 
