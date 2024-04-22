@@ -3,7 +3,7 @@ import {app } from './app';
 import connectDB from './config/db';
 
 
-const PORT = process.env.PORT || 3000
+const PORT = process.env.PORT || 8080
 const start = async() =>{
     try{
         console.log('hi da');
