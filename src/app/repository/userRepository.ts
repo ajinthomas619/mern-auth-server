@@ -56,6 +56,26 @@ catch(error){
             console.log(error,"Error while finding user")
         }
     
+    },
+    getUserById:async(id:any) => {
+        try {
+            const user = await User.findById(id)
+            console.log("user by id",user);
+            
+            if(!user) {
+                return{
+                status:true,
+                data:user
+                }
+            }
+                else{
+                    return {status:false}
+                }
+            
+        }
+        catch(error){
+            console.log("error in get user by id",error)
+        }
     }
 
 }

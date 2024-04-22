@@ -8,8 +8,10 @@ export default (dependencies:any) => {
     } = dependencies
 
 const verifyOtpcontroller = async (req:Request, res:Response) => {
-    console.log("body",req.body)
     const otp  = req.session.otp
+    console.log("body",req.body)
+
+    
     console.log("otpent--",otp)
     
     if(otp == req.body.otp){

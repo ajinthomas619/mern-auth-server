@@ -2,9 +2,9 @@ import jwt from 'jsonwebtoken'
 import {createAccessToken} from '../../utils/jwt'
 
 export const refreshTokeUsecase = async(dependencies:any) => {
-    const {repository:{authRepository}} = dependencies
+    const {repository:{userRepository}} = dependencies
     const refreshSecret:any = process.env.REFRESH_SECRET_KEY
-    if(!authRepository) {
+    if(!userRepository) {
         return {status:false,message:"repository not found"}
     }
     const executeFunction = async(token:string) => {
@@ -22,7 +22,7 @@ export const refreshTokeUsecase = async(dependencies:any) => {
       if(!playload.user){
         return{status:false,message:"playload not found"}
       }
-      const user = await authRepository.getUserById(playload.user.id)
+      const user = await userRepository.getUserById(playload.user.id)
       if(!user){
         return{status:false,message:"no user"}
       }

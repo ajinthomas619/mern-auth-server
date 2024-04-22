@@ -28,7 +28,7 @@ const app =express();
 app.use(express.urlencoded({extended:true}));
 app.use(express.json());
 app.use(cookieParser())
-const store = new MemoryStore()
+
 app.use(
     cors({
       origin: "https://mern-auth-client-fawn.vercel.app",
@@ -44,9 +44,9 @@ app.use(
      saveUninitialized:false,
      cookie: {
       maxAge :30*60*60*1000,
-      httpOnly : true,
+ 
      },
-     store:store,
+ 
   }as SessionOptions)
 )
 

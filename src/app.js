@@ -42,7 +42,7 @@ app.use(express_1.default.json());
 app.use((0, cookie_parser_1.default)());
 const store = new express_session_1.MemoryStore();
 app.use((0, cors_1.default)({
-    origin: "https://mern-auth-client-fawn.vercel.app",
+    origin: "http://localhost:5173",
     methods: "GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS",
     credentials: true,
 }));

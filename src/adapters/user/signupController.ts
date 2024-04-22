@@ -1,4 +1,4 @@
-import { Request,Response, response } from "express";
+ import { Request,Response, response } from "express";
 
 
 export default(dependencies:any) =>{
