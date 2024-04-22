@@ -26,15 +26,16 @@ declare module 'express-session'{
 
 const app =express();
 app.use(express.json());
+app.use(express.urlencoded({extended:true}));
 app.use(cookieParser())
 const store = new MemoryStore()
-app.use(
-    cors({
-      origin: "https://mern-auth-client-fawn.vercel.app",
-      methods: "GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS",
-      credentials: true,
-    })
-  );
+const corsOptions ={
+  origin:'*', 
+  credentials:true,            //access-control-allow-credentials:true
+  optionSuccessStatus:200,
+}
+
+app.use(cors(corsOptions))
 app.use(
   session({
 
@@ -49,7 +50,6 @@ app.use(
   }as SessionOptions)
 )
 
-app.use(express.urlencoded({extended:true}));
 app.use("/api",routes(dependencies));
 
 
