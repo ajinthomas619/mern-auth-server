@@ -12,13 +12,13 @@ const verifyOtpcontroller = async (req:Request, res:Response) => {
     const otp  = req.session.otp
     const userData =  req.session.userData
     console.log("body",req.body)
+    console.log("otpent--",otp)
 
     const response = await verifyOtp_Usecase(dependencies).executeFunction(
         userData,
         otp,
         enteredOtp
     )
-    console.log("otpent--",otp)
     
 console.log("the session for verify otp",req.session)
         
@@ -49,7 +49,7 @@ console.log("the session for verify otp",req.session)
         } 
         
     
+    }
     return verifyOtpcontroller
-}
 
 }
