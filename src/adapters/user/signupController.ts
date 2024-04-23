@@ -7,6 +7,7 @@ export default(dependencies:any) =>{
     const{useCase:{addUser_useCase}} = dependencies;
     const addUser = async(req:Request,res:Response)=>{
      console.log("bodyyy",req.body)
+     console.log("session in signup controller",req.session)
 
      const {firstname,lastname,email,password,mobile} = req.body
      const data ={
@@ -28,7 +29,7 @@ export default(dependencies:any) =>{
        req.session.userData = data
        console.log("data=====",data)
        req.session.otp = otp
-       console.log("otp===",otp)
+       console.log("otp===",otp,req.session.otp)
        res.json({
         status: response?.status,
 
@@ -45,3 +46,5 @@ export default(dependencies:any) =>{
 return addUser
 
 }
+
+
