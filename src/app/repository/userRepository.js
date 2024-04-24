@@ -35,6 +35,7 @@ exports.default = {
             email: data.email,
             password: data.password,
             mobile: data.mobile,
+            otp: data.otp
         };
         const user = yield User.create(userData);
         console.log(user, "helllaaa");
@@ -57,6 +58,24 @@ exports.default = {
         }
         catch (error) {
             console.log(error, "Error while finding user");
+        }
+    }),
+    getUserById: (id) => __awaiter(void 0, void 0, void 0, function* () {
+        try {
+            const user = yield User.findById(id);
+            console.log("user by id", user);
+            if (!user) {
+                return {
+                    status: true,
+                    data: user
+                };
+            }
+            else {
+                return { status: false };
+            }
+        }
+        catch (error) {
+            console.log("error in get user by id", error);
         }
     })
 };

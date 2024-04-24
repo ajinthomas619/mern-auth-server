@@ -2,6 +2,8 @@
 import { createAccessToken,createRefreshToken} from "../../utils/jwt"
 import { hashPassword } from "../../helpers";
 import { UserData } from "../../utils/interfaces/userinterface";
+import { User } from "../../app/database/Schema/userSchema";
+import user from "../../adapters/user";
 
 
 export const verifyOtp_Usecase = (dependencies:any) => {
@@ -9,25 +11,24 @@ export const verifyOtp_Usecase = (dependencies:any) => {
         repository: { userRepository },
     } = dependencies;
       
-const executeFunction = async(data:UserData,otp:any,enteredOtp:any) => {
-    if(enteredOtp == otp){
-        console.log("orginal data====",data.password)
-        const hashedPassword = await hashPassword(data?.password);
-         const updatedData = {...data,password:hashedPassword}
-        const addUserData = await userRepository.createUser(updatedData)
-        console.log("addUserData===",addUserData)
-        if(addUserData.status){
+const executeFunction = async(userId:any,enteredOtp:any) => {
+    const user = await User.findById(userId)
+   
+    if(enteredOtp == user?.otp){
+        const updateduser = await User.findByIdAndUpdate(userId,{isVerified:true},{new:true})
+        
+        if(updateduser){
             const accessToken = createAccessToken(
-                addUserData,
+                updateduser,
                 process.env.ACCESS_SECRET_KEY || 'accesssecret',
                 process.env.ACCESS_EXPIRY|| "1h"
                 )
             const refreshtToken = createRefreshToken(
-                addUserData,
+                updateduser,
                 process.env.REFRESH_SECRET_KEY||"refreshsecret",
                 process.env.REFRESH_EXPIRY||"30day"
                 )
-            return { status:true , accessToken:accessToken,refreshToken:refreshtToken,user:addUserData,message:"otp verified"}
+            return { status:true , accessToken:accessToken,refreshToken:refreshtToken,user:updateduser,message:"otp verified"}
         }
         else{
             return { status :false}

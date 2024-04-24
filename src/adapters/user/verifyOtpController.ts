@@ -9,24 +9,22 @@ export default (dependencies:any) => {
 
 const verifyOtpcontroller = async (req:Request, res:Response) => {
     const enteredOtp = req.body.otp
-    const otp  = req.session.otp
-    const userData =  req.session.userData
-    console.log("body",req.body)
-    console.log("otpent--",otp)
+const userid=req.body.id
+   
+
 
     const response = await verifyOtp_Usecase(dependencies).executeFunction(
-        userData,
-        otp,
+        userid,
         enteredOtp
     )
     
-console.log("the session for verify otp",req.session)
+
         
         if(response.status){
 
 
             const { accessToken,refreshtToken} = response
-            const user = response.user.user
+            const user = response.user
 
 
             req.session.refreshtoken = refreshtToken;

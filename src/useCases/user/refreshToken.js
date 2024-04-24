@@ -16,9 +16,9 @@ exports.refreshTokeUsecase = void 0;
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const jwt_1 = require("../../utils/jwt");
 const refreshTokeUsecase = (dependencies) => __awaiter(void 0, void 0, void 0, function* () {
-    const { repository: { authRepository } } = dependencies;
+    const { repository: { userRepository } } = dependencies;
     const refreshSecret = process.env.REFRESH_SECRET_KEY;
-    if (!authRepository) {
+    if (!userRepository) {
         return { status: false, message: "repository not found" };
     }
     const executeFunction = (token) => __awaiter(void 0, void 0, void 0, function* () {
@@ -35,7 +35,7 @@ const refreshTokeUsecase = (dependencies) => __awaiter(void 0, void 0, void 0, f
         if (!playload.user) {
             return { status: false, message: "playload not found" };
         }
-        const user = yield authRepository.getUserById(playload.user.id);
+        const user = yield userRepository.getUserById(playload.user.id);
         if (!user) {
             return { status: false, message: "no user" };
         }

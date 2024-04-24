@@ -11,18 +11,27 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.addUser_useCase = void 0;
 const helpers_1 = require("../../helpers");
+const helpers_2 = require("../../helpers");
 const addUser_useCase = (dependencies) => {
-    const { repository: { authRepository } } = dependencies;
+    const { repository: { userRepository } } = dependencies;
     const executeFunction = (data) => __awaiter(void 0, void 0, void 0, function* () {
+        var _a;
         try {
-            const userExist = yield (authRepository === null || authRepository === void 0 ? void 0 : authRepository.userEmailExist(data === null || data === void 0 ? void 0 : data.email));
+            console.log("user daataa", data);
+            const userExist = yield (userRepository === null || userRepository === void 0 ? void 0 : userRepository.userEmailExist(data === null || data === void 0 ? void 0 : data.email));
             if (userExist) {
                 return { status: false, message: "User Already Exist" };
             }
-            const response = yield (0, helpers_1.sendOtp)(data === null || data === void 0 ? void 0 : data.email);
+            const response = yield (0, helpers_1.sendOtp)(data === null || data === void 0 ? void 0 : data.email, data === null || data === void 0 ? void 0 : data.otp);
             if (response === null || response === void 0 ? void 0 : response.status) {
-                const { otp } = response;
-                return { status: true, data, otp: otp };
+                console.log("data after response", data);
+                const otp = data.otp;
+                console.log("otp for veerify", otp);
+                console.log("password data====", data === null || data === void 0 ? void 0 : data.password);
+                const hashedPassword = yield (0, helpers_2.hashPassword)((_a = data === null || data === void 0 ? void 0 : data.password) !== null && _a !== void 0 ? _a : "");
+                const updatedData = Object.assign(Object.assign({}, data), { password: hashedPassword });
+                const addUserData = yield userRepository.createUser(updatedData);
+                return { status: true, data: addUserData, otp: otp };
             }
             else {
                 return { status: false, message: 'invalid otp' };

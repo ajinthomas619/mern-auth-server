@@ -22,6 +22,13 @@ const userSchema = new mongoose_1.default.Schema({
     mobile: {
         type: String,
     },
+    otp: {
+        type: String,
+    },
+    isVerified: {
+        type: Boolean,
+        default: false
+    }
 });
 const User = mongoose_1.default.model("User", userSchema);
 exports.User = User;

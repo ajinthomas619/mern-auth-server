@@ -4,10 +4,9 @@ export const hashPassword = async(password:string):Promise<string>  => {
 
     try{
        
-        console.log('hash password')
+     
         const salt =await bcrypt.genSalt(10)
-        console.log('saltt===',salt)
-        console.log("password===",password)
+  
          
 
         const hashedPass = await bcrypt.hash(password, salt) 

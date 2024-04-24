@@ -8,21 +8,22 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.sendOtp = void 0;
-const nodemailer = require('nodemailer');
-const otp = Math.floor(Math.random() * 9000 + 1000);
-console.log(otp);
-const sendOtp = (email) => __awaiter(void 0, void 0, void 0, function* () {
-    const transporter = nodemailer.createTransport({
-        service: 'gmail',
+const nodemailer_1 = __importDefault(require("nodemailer"));
+const sendOtp = (email, otp) => __awaiter(void 0, void 0, void 0, function* () {
+    const transporter = nodemailer_1.default.createTransport({
+        service: "gmail",
         host: "stmp.forwardmail.net",
         port: 587,
         secure: false,
         requireTLS: true,
         auth: {
             user: "kidiloski619@gmail.com",
-            pass: 'hbwwvctqwvgcwajm',
+            pass: "hbwwvctqwvgcwajm",
         },
     });
     const info = yield transporter.sendMail({

@@ -6,7 +6,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.decodeRefreshToken = exports.clearAccessTokenFromCookie = exports.createRefreshToken = exports.createAccessToken = void 0;
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const createAccessToken = (user, AccessTokensecretkey, Expiration) => {
-    console.log("access token creating");
+    console.log("access token creating", user);
     const token = jsonwebtoken_1.default.sign({ user }, AccessTokensecretkey, {
         expiresIn: Expiration,
     });

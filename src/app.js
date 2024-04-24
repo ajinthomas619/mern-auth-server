@@ -33,27 +33,26 @@ const routes_1 = require("./routes");
 const dependencies_1 = __importDefault(require("./config/dependencies"));
 const express_session_1 = __importStar(require("express-session"));
 const dotenv_1 = __importDefault(require("dotenv"));
-const cookie_parser_1 = __importDefault(require("cookie-parser"));
 dotenv_1.default.config();
+const store = new express_session_1.MemoryStore();
 const app = (0, express_1.default)();
 exports.app = app;
 app.use(express_1.default.urlencoded({ extended: true }));
 app.use(express_1.default.json());
-app.use((0, cookie_parser_1.default)());
-const store = new express_session_1.MemoryStore();
 app.use((0, cors_1.default)({
     origin: "http://localhost:5173",
     methods: "GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS",
     credentials: true,
 }));
 app.use((0, express_session_1.default)({
-    secret: process.env.SESSION_SECRET_KEY,
+    secret: process.env.SESSION_SECRET_KEY || "tOYVSLenTZTMsS7TzD2",
     resave: false,
     saveUninitialized: false,
     cookie: {
-        maxAge: 30 * 60 * 60 * 1000,
         httpOnly: true,
+        secure: true,
+        maxAge: 30 * 60 * 60 * 1000,
     },
-    store: store,
+    store: store
 }));
 app.use("/api", (0, routes_1.routes)(dependencies_1.default));

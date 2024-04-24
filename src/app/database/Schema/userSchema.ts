@@ -24,6 +24,13 @@ password: {
 mobile: {
     type:String,
 },
+otp:{
+    type:String,
+},
+isVerified:{
+    type:Boolean, 
+    default : false 
+}
 })
 
 const User= mongoose.model("User",userSchema); 

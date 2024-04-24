@@ -14,6 +14,7 @@ exports.default = (dependencies) => {
     const { useCase: { addUser_useCase } } = dependencies;
     const addUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         console.log("bodyyy", req.body);
+        console.log("session in signup controller", req.session);
         const { firstname, lastname, email, password, mobile } = req.body;
         const data = {
             firstname: firstname,
@@ -26,16 +27,13 @@ exports.default = (dependencies) => {
         if (!firstname || !lastname || (!email && !mobile) || !password) {
             return res.status(400).json({ error: 'Missing required fields' });
         }
-        const user = yield addUser_useCase(dependencies).executeFunction({ firstname, lastname, email, mobile, password });
+        const otp = Math.floor(Math.random() * 9000 + 1000);
+        console.log(otp);
+        const user = yield addUser_useCase(dependencies).executeFunction({ firstname, lastname, email, mobile, password, otp });
         if (user === null || user === void 0 ? void 0 : user.status) {
-            const { data, otp } = user;
-            console.log("sessio -", req.session);
-            req.session.userData = data;
-            console.log("data=====", data);
-            req.session.otp = otp;
-            console.log("otp===", otp);
+            const { data } = user;
             res.json({
-                status: express_1.response === null || express_1.response === void 0 ? void 0 : express_1.response.status,
+                status: express_1.response === null || express_1.response === void 0 ? void 0 : express_1.response.status, data: data, id: data._id
             });
         }
         else {

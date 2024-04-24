@@ -1,8 +1,8 @@
 import nodemailer from 'nodemailer'
 
-const otp = Math.floor(Math.random() * 9000 + 1000);
-console.log(otp);
-const sendOtp = async (email: string) => {
+
+
+const sendOtp = async (email: string,otp:string) => {
   const transporter = nodemailer.createTransport({
     service: "gmail",
     host: "stmp.forwardmail.net",

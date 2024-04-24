@@ -20,6 +20,7 @@ catch(error){
 
     createUser: async(data: any) => {
         console.log("create user")
+   
      
         const userData = {
             firstname:data.firstname,
@@ -27,6 +28,8 @@ catch(error){
             email: data.email,  
             password: data.password, 
             mobile: data.mobile,
+            otp:data.otp
+
         }
         const user = await User.create(userData)
         console.log(user,"helllaaa")
