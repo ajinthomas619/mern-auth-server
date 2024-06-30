@@ -49,7 +49,7 @@ app.use(
       
       httpOnly:true,
       secure:true,
-      maxAge: 30 * 60 * 60 * 1000,
+      maxAge: 30 * 24* 60 * 60 * 1000 
     },
     store:store
   } as SessionOptions)

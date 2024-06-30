@@ -20,13 +20,13 @@ export const userLogin_useCase = (dependencies:any) => {
         if(validPass){
             const user_accessToken = createAccessToken(
                 user,
-                process.env.ACCESS_SECRET_KEY || '',
-                process.env.ACCESS_EXPIRY || ''
+                process.env.ACCESS_SECRET_KEY || 'mysecret',
+                process.env.ACCESS_EXPIRY || '1 h'
             )
             const user_refreshToken = createRefreshToken(
                 user,
-                process.env.REFRESH_SECRET_KEY || '',
-                process.env.REFRESH_EXPIRY || ''
+                process.env.REFRESH_SECRET_KEY || 'mysecret',
+                process.env.REFRESH_EXPIRY || '72 h'
             )
        
             return { status:true, user:user,user_accessToken:user_accessToken,user_refreshToken:user_refreshToken}
